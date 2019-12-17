@@ -21,6 +21,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="160" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <materialDesign:ColorZone VerticalAlignment="Stretch" Mode="PrimaryLight">
                         <materialDesign:PackIcon
@@ -34,7 +35,16 @@
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
-                        <TextBlock Foreground="White" Text="{Binding Title}" />
+                        <TextBlock
+                            Margin="0"
+                            Foreground="Black"
+                            Text="{Binding Title}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+
                         <Button
                             Margin="0,4,0,0"
                             Command="{x:Static materialDesign:Flipper.FlipCommand}"

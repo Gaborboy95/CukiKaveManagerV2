@@ -9,6 +9,8 @@
     Title="Kuga"
     Width="800"
     Height="450"
+    MinWidth="200"
+    MinHeight="256"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
     TextElement.FontSize="14"
