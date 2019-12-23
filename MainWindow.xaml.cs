@@ -1,18 +1,15 @@
 ﻿using CukiKaveManagerV2.UserControls;
+using CukiKaveManagerV2.ws;
+using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
+using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Markup;
 
 namespace CukiKaveManagerV2
 {
@@ -21,14 +18,61 @@ namespace CukiKaveManagerV2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string locale = "hu-HU";
+        const string WS_ADDRESS = @"ws://localhost";
+        const string HASH_FILE = "auth.hash";
+        public Dictionary<int, flippable> Products = new Dictionary<int, flippable>();
+
+        public GenericWebSocket ws;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(locale);
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(locale);
+
+            LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(locale)));
+        }
+
+        public async Task<bool> ReloadUI()
+        {
+            ItemHolder.Children.Clear();
+            var products = await cukiAPI.GetProducts();
+
+            foreach (var _product in products)
             {
-                ItemHolder.Children.Add(new flippable("Teszt " + i, i * 1000, "Lorem ipsum " + i));
+                var flp = new flippable(_product);
+                ItemHolder.Children.Add(flp);
+                Products.Add(_product.id, flp);
             }
+
+            loadingBar.Visibility = Visibility.Hidden;
+            mainContent.Visibility = Visibility.Visible;
+            return true;
+        }
+
+        private async void windowLoaded(object sender, RoutedEventArgs e)
+        {
+            string hash = null;
+            if (File.Exists(HASH_FILE))
+            {
+                var file = File.ReadAllText(HASH_FILE);
+                hash = file;
+            }
+
+            cukiAPI.hash = hash;
+
+            ws = new GenericWebSocket(new Uri(WS_ADDRESS + "/" + hash));
+            ws.OnWebSocketConnected += onWSConnected;
+            await ws.Connect();
+            new WebSocketHandler(ws, this);
+        }
+
+        private async void onWSConnected(object? sender, EventArgs e)
+        {
+            await Dispatcher.InvokeAsync<Task<bool>>(ReloadUI);
         }
     }
 }

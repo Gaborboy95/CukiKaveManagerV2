@@ -15,30 +15,33 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <Grid>
-        <materialDesign:Flipper Width="200" Height="256">
+        <materialDesign:Flipper
+            x:Name="thisFlipper"
+            Width="190"
+            Height="256">
             <materialDesign:Flipper.FrontContent>
-                <Grid Width="200" Height="256">
+                <Grid Width="190" Height="256">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="160" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <materialDesign:ColorZone VerticalAlignment="Stretch" Mode="PrimaryLight">
-                        <materialDesign:PackIcon
-                            Width="128"
-                            Height="128"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Kind="AccountCircle" />
-                    </materialDesign:ColorZone>
+                    <Image
+                        x:Name="frontImg"
+                        Width="128"
+                        Height="128"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+
                     <StackPanel
                         Grid.Row="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
                         <TextBlock
+                            x:Name="frontTitle"
                             Margin="0"
-                            Foreground="Black"
-                            Text="{Binding Title}" />
+                            Foreground="White"
+                            Text="FrontTile" />
                     </StackPanel>
                     <StackPanel
                         Grid.Row="2"
@@ -61,51 +64,71 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <materialDesign:ColorZone Padding="6" Mode="Accent">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="{Binding ElementName=thisFlipper, Path=Width}" Orientation="Horizontal">
                             <Button
                                 HorizontalAlignment="Left"
-                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                Click="modifyClicked"
                                 Style="{StaticResource MaterialDesignToolForegroundButton}">
-                                <materialDesign:PackIcon HorizontalAlignment="Right" Kind="ArrowLeft" />
+                                <materialDesign:PackIcon HorizontalAlignment="Right" Kind="Check" />
                             </Button>
-                            <TextBlock Margin="8,0,0,0" VerticalAlignment="Center">
+                            <TextBlock
+                                Margin="15,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
                                 SZERKESZTÉS
                             </TextBlock>
+                            <Button
+                                Margin="20,0,0,0"
+                                HorizontalAlignment="Right"
+                                Click="deleteButton"
+                                Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                <materialDesign:PackIcon HorizontalAlignment="Right" Kind="TrashCan" />
+                            </Button>
                         </StackPanel>
                     </materialDesign:ColorZone>
                     <Grid
                         Grid.Row="1"
-                        Width="172"
+                        Width="180"
                         Height="Auto"
                         Margin="0,0,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top">
-                        <StackPanel>
-                            <TextBox
-                                x:Name="title"
-                                Width="150"
-                                materialDesign:HintAssist.Hint="Elem neve"
-                                materialDesign:HintAssist.IsFloating="True"
-                                Text="{Binding Title}" />
-                            <TextBox
-                                x:Name="price"
-                                Width="150"
-                                materialDesign:HintAssist.Hint="Ár"
-                                materialDesign:HintAssist.IsFloating="True"
-                                Text="{Binding Price}" />
-                            <RichTextBox
-                                x:Name="desc"
-                                Width="150"
-                                materialDesign:HintAssist.Hint="Leírás"
-                                materialDesign:HintAssist.IsFloating="True">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <TextBlock Text="{Binding Description}" />
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-
-                        </StackPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                            <WrapPanel HorizontalAlignment="Center">
+                                <TextBox
+                                    x:Name="title"
+                                    Width="180"
+                                    materialDesign:HintAssist.Hint="Elem neve"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    Text="Title" />
+                                <TextBox
+                                    x:Name="price"
+                                    Width="180"
+                                    materialDesign:HintAssist.Hint="Ár"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    Text="Price" />
+                                <RichTextBox
+                                    x:Name="desc"
+                                    Width="180"
+                                    materialDesign:HintAssist.Hint="Leírás"
+                                    materialDesign:HintAssist.IsFloating="True">
+                                    <FlowDocument />
+                                </RichTextBox>
+                                <TextBox
+                                    x:Name="imagePath"
+                                    Width="180"
+                                    materialDesign:HintAssist.Hint="Kép elérési út"
+                                    materialDesign:HintAssist.IsFloating="True" />
+                                <DatePicker
+                                    x:Name="datePick"
+                                    Width="180"
+                                    Localization.Attributes="hu-HU" />
+                                <materialDesign:TimePicker
+                                    x:Name="timePick"
+                                    Width="180"
+                                    Is24Hours="True" />
+                            </WrapPanel>
+                        </ScrollViewer>
                     </Grid>
                 </Grid>
             </materialDesign:Flipper.BackContent>
