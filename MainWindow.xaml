@@ -91,7 +91,6 @@
                             Margin="0"
                             HorizontalAlignment="Center"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                            Foreground="Red"
                             Style="{StaticResource MaterialDesignFlatButton}">
                             MEGERŐSÍTÉS
                         </Button>
@@ -100,6 +99,7 @@
                             Margin="0"
                             HorizontalAlignment="Center"
                             Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Foreground="Gray"
                             IsCancel="True"
                             Style="{StaticResource MaterialDesignFlatButton}">
                             VISSZAVONÁS

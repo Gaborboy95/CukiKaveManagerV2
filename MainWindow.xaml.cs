@@ -20,7 +20,8 @@ namespace CukiKaveManagerV2
     public partial class MainWindow : Window
     {
         private string locale = "hu-HU";
-        const string WS_ADDRESS = @"ws://localhost";
+        //const string WS_ADDRESS = "ws://localhost"; //DEBUG LOCALHOST
+        const string WS_ADDRESS = "ws://cukikave.herokuapp.com"; //MAIN SERVER
         const string HASH_FILE = "auth.hash";
         public Dictionary<int, flippable> Products = new Dictionary<int, flippable>();
         public int currentPrompt = -1;
@@ -50,6 +51,7 @@ namespace CukiKaveManagerV2
                 Products.Add(_product.id, flp);
                 deleteButton.Click += (object sndr, RoutedEventArgs arg) => flp.deleteConfirm(currentPrompt);
                 updateConfirmButton.Click += (object sndr, RoutedEventArgs arg) => flp.updateConfirm(currentPrompt);
+                updateRollbackButton.Click += (object sndr, RoutedEventArgs arg) => flp.rollbackChanges(currentPrompt);
             }
 
             loadingBar.Visibility = Visibility.Hidden;
