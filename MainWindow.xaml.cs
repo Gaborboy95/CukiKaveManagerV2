@@ -71,7 +71,17 @@ namespace CukiKaveManagerV2
 
         private async void onWSConnected(object? sender, EventArgs e)
         {
-            await Dispatcher.InvokeAsync<Task<bool>>(ReloadUI);
+            //await Dispatcher.InvokeAsync<Task<bool>>(ReloadUI);
+        }
+
+        public void deletePromptOpen()
+        {
+
+        }
+
+        private void Button_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -39,6 +39,25 @@
                 Style="{DynamicResource MaterialDesignLinearProgressBar}"
                 Value="0" />
         </StackPanel>
+        <Button
+            Width="128"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+            IsEnabled="True">
+            PASS VIEW
+        </Button>
+        <StackPanel Margin="16">
+            <TextBlock Text="Biztos ki akarja törölni?" />
+            <Button
+                HorizontalAlignment="Center"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                CommandParameter="Sample2Cancel"
+                IsCancel="True"
+                Style="{StaticResource MaterialDesignFlatButton}">
+                CANCEL
+            </Button>
+        </StackPanel>
         <ScrollViewer
             x:Name="mainContent"
             VerticalScrollBarVisibility="Hidden"
