@@ -1,6 +1,5 @@
 ﻿using CukiKaveManagerV2.UserControls;
 using CukiKaveManagerV2.ws;
-using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
