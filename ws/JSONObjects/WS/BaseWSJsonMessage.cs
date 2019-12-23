@@ -9,6 +9,6 @@ namespace CukiKaveManagerV2.JSONObjects.WS
     public class BaseWSJsonMessage
     {
         public string type { get; set; }
-        public JObject product { get; set; }
+        public JObject message { get; set; }
     }
 }

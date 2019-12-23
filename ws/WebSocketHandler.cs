@@ -27,19 +27,18 @@ namespace CukiKaveManagerV2.ws
         private void onMessageReceived(object sender, MessageReceivedEventArgs e)
         {
             var baseprd = JsonConvert.DeserializeObject<BaseWSJsonMessage>(e.message);
-            MessageBox.Show(baseprd.product.ToString() + " | " + baseprd.type);
             switch(baseprd.type)
             {
                 case TYPE_NEWMESSAGE:
-                    newMessageReceived(baseprd.product.ToObject<Product>());
+                    newMessageReceived(baseprd.message.ToObject<Product>());
                     break;
 
                 case TYPE_UPDATEMESSAGE:
-                    updatedMessageReceived(baseprd.product.ToObject<Product>());
+                    updatedMessageReceived(baseprd.message.ToObject<Product>());
                     break;
 
                 case TYPE_DELETEMESSAGE:
-                    deletedMessageReceived(baseprd.product.ToObject<DeletedMessage>());
+                    deletedMessageReceived(baseprd.message.ToObject<DeletedMessage>());
                     break;
 
                 default:
