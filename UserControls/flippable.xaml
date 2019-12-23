@@ -50,7 +50,7 @@
 
                         <Button
                             Margin="0,4,0,0"
-                            Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                            Click="frontFlipButtonClicked"
                             Style="{StaticResource MaterialDesignFlatButton}">
                             SZERKESZTÉS
                         </Button>

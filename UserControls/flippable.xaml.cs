@@ -91,7 +91,7 @@ namespace CukiKaveManagerV2.UserControls
             // Make bitmapimage for the front page
             BitmapImage bmp = new BitmapImage();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(@"http://localhost/uploads/" + _prd.image, UriKind.Absolute);
+            bmp.UriSource = new Uri(cukiAPI.server + "/uploads/" + _prd.image, UriKind.Absolute);
             bmp.EndInit();
             frontImg.Source = bmp;
 
@@ -148,7 +148,7 @@ namespace CukiKaveManagerV2.UserControls
             {
                 // Changed, display prompt to check if user really wants to change the data
                 // Debug info
-                /*MessageBox.Show("Mod | Org\n" +
+                MessageBox.Show("Mod | Org\n" +
                     $"{_prd.id.ToString()} | {orgProduct.id.ToString()} | {_prd.id == orgProduct.id}\n" +
                     $"{_prd.name} | {orgProduct.name}  | {_prd.name == orgProduct.name}\n" +
                     $"{_prd.description} | {orgProduct.description} | {_prd.description == orgProduct.description}\n" +
@@ -156,7 +156,7 @@ namespace CukiKaveManagerV2.UserControls
                     $"{_prd.price.ToString()} | {orgProduct.price.ToString()} | {_prd.price == orgProduct.price}\n" +
                     $"{_prd.type} | {orgProduct.type} | {_prd.type == orgProduct.type}\n" +
                     $"{_prd.added.ToString()} | {orgProduct.added.ToString()} | {_prd.added == orgProduct.added}");
-                    */
+                    
 
                 mainWindow.updateConfirm.IsOpen = true;
                 mainWindow.currentPrompt = id;
@@ -181,6 +181,11 @@ namespace CukiKaveManagerV2.UserControls
                     
                 }
             }
+        }
+
+        private void frontFlipButtonClicked(object sender, RoutedEventArgs e)
+        {
+            thisFlipper.IsFlipped = true;
         }
     }
 }

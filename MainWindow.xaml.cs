@@ -20,8 +20,9 @@ namespace CukiKaveManagerV2
     public partial class MainWindow : Window
     {
         private string locale = "hu-HU";
-        //const string WS_ADDRESS = "ws://localhost"; //DEBUG LOCALHOST
-        const string WS_ADDRESS = "ws://cukikave.herokuapp.com"; //MAIN SERVER
+        //public const string ADDRESS = "cukikave.herokuapp.com"; // This is easier to change
+        public const string ADDRESS = "localhost"; // This is easier to change
+        const string WS_ADDRESS = "ws://"+ADDRESS; //MAIN SERVER
         const string HASH_FILE = "auth.hash";
         public Dictionary<int, flippable> Products = new Dictionary<int, flippable>();
         public int currentPrompt = -1;

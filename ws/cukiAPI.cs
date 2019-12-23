@@ -10,8 +10,7 @@ namespace CukiKaveManagerV2.ws
 {
     class cukiAPI
     {
-        //public static string server = "http://localhost"; //DEBUG LOCALHOST
-        public static string server = "http://cukikave.herokuapp.com"; //MAIN SERVER
+        public static string server = "http://"+MainWindow.ADDRESS; //MAIN SERVER
         const uint PORT = 80;
 
         //URLS
