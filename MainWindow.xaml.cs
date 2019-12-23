@@ -1,5 +1,6 @@
 ﻿using CukiKaveManagerV2.UserControls;
 using CukiKaveManagerV2.ws;
+using CukiKaveManagerV2.ws.JSONObjects;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Markup;
 
 namespace CukiKaveManagerV2
@@ -21,6 +23,7 @@ namespace CukiKaveManagerV2
         const string WS_ADDRESS = @"ws://localhost";
         const string HASH_FILE = "auth.hash";
         public Dictionary<int, flippable> Products = new Dictionary<int, flippable>();
+        public int currentPrompt = -1;
 
         public GenericWebSocket ws;
 
@@ -42,9 +45,11 @@ namespace CukiKaveManagerV2
 
             foreach (var _product in products)
             {
-                var flp = new flippable(_product);
+                var flp = new flippable(_product, this);
                 ItemHolder.Children.Add(flp);
                 Products.Add(_product.id, flp);
+                deleteButton.Click += (object sndr, RoutedEventArgs arg) => flp.deleteConfirm(currentPrompt);
+                updateConfirmButton.Click += (object sndr, RoutedEventArgs arg) => flp.updateConfirm(currentPrompt);
             }
 
             loadingBar.Visibility = Visibility.Hidden;
@@ -67,21 +72,62 @@ namespace CukiKaveManagerV2
             ws.OnWebSocketConnected += onWSConnected;
             await ws.Connect();
             new WebSocketHandler(ws, this);
+
+            //Add handler for clicking on the add new product button
+            confirmAddNew.Click += ConfirmAddNew_Click;
         }
 
-        private async void onWSConnected(object? sender, EventArgs e)
+        private void ConfirmAddNew_Click(object sender, RoutedEventArgs e)
         {
-            //await Dispatcher.InvokeAsync<Task<bool>>(ReloadUI);
+            
         }
 
-        public void deletePromptOpen()
+        private async void onWSConnected(object sender, EventArgs e)
         {
-
+            await Dispatcher.InvokeAsync<Task<bool>>(ReloadUI);
         }
 
-        private void Button_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void openNewProductDialog(object sender, RoutedEventArgs e)
         {
+            addNewProduct.IsOpen = true;
+            addDatePick.SelectedDate = DateTime.Now;
+        }
 
+        private async void addNewItemClick(object sender, RoutedEventArgs e)
+        {
+            addNewProduct.IsOpen = false;
+            int _price;
+            if (addTitle.Text == "" || new TextRange(addDesc.Document.ContentStart, addDesc.Document.ContentEnd).Text == "" || !int.TryParse(addPrice.Text, out _price) || addProductType.SelectedItem == null )
+            {
+                inputMissing.IsOpen = true;
+            }
+            else
+            {
+                //Success, add the new item to the database
+                Product newPrd = new Product(int.Parse(addPrice.Text), addTitle.Text, 999, new TextRange(addDesc.Document.ContentStart, addDesc.Document.ContentEnd).Text, addImagePath.Text, parseType(((ComboBoxItem)addProductType.SelectedItem).Content.ToString()), addDatePick.DisplayDate);
+
+                await cukiAPI.SendNewProduct(newPrd);
+
+            }
+        }
+
+        public string parseType(string _ps)
+        {
+            switch (_ps)
+            {
+                case "Torta":
+                    return "cake";
+                case "Magyarország tortái":
+                    return "huncake";
+                case "Forróital":
+                    return "hotdrinks";
+                case "Ital":
+                    return "drinks";
+                case "Sütemény":
+                    return "bakedgoods";
+                default:
+                    return "parseerror";
+            }
         }
     }
 }

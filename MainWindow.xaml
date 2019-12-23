@@ -21,6 +21,174 @@
     mc:Ignorable="d">
 
     <Grid>
+        <materialDesign:DialogHost x:Name="inputMissing" IsOpen="False">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock
+                        Padding="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontSize="13"
+                        TextAlignment="Justify">
+                        Kérem ellenőrizze, hogy minden csillaggal(*)<LineBreak />
+                        jelölt mező ki van töltve, valamint<LineBreak />
+                        hogy helyesen vannak-e kitöltve.</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            OK
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+        <materialDesign:DialogHost x:Name="deleteConfirm" IsOpen="False">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock
+                        Padding="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontSize="13"
+                        Text="Biztos ki akarja törölni?" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            x:Name="deleteButton"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Foreground="Red"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            TÖRLÉS
+                        </Button>
+                        <Button
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            MÉGSEM
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+        <materialDesign:DialogHost x:Name="updateConfirm" IsOpen="False">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock
+                        Padding="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontSize="13"
+                        Text="Valami megváltozott. Biztos akarja frissíteni?" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            x:Name="updateConfirmButton"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Foreground="Red"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            MEGERŐSÍTÉS
+                        </Button>
+                        <Button
+                            x:Name="updateRollbackButton"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            VISSZAVONÁS
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
+        <materialDesign:DialogHost x:Name="addNewProduct" IsOpen="False">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16" Orientation="Vertical">
+                    <TextBlock
+                        Padding="0,0,0,5"
+                        HorizontalAlignment="Center"
+                        FontSize="14"
+                        Text="Új termék hozzáadása" />
+                    <WrapPanel HorizontalAlignment="Center" Orientation="Vertical">
+                        <TextBox
+                            x:Name="addTitle"
+                            Width="250"
+                            materialDesign:HintAssist.Hint="Termék neve"
+                            materialDesign:HintAssist.IsFloating="True" />
+                        <TextBox
+                            x:Name="addPrice"
+                            Width="250"
+                            materialDesign:HintAssist.Hint="Ár"
+                            materialDesign:HintAssist.IsFloating="True" />
+                        <RichTextBox
+                            x:Name="addDesc"
+                            Width="250"
+                            materialDesign:HintAssist.Hint="Leírás"
+                            materialDesign:HintAssist.IsFloating="True">
+                            <FlowDocument />
+                        </RichTextBox>
+                        <TextBox
+                            x:Name="addImagePath"
+                            Width="250"
+                            materialDesign:HintAssist.Hint="Kép elérési út"
+                            materialDesign:HintAssist.IsFloating="True" />
+                        <ComboBox
+                            x:Name="addProductType"
+                            Width="250"
+                            materialDesign:HintAssist.Hint="Típus"
+                            materialDesign:HintAssist.IsFloating="True">
+                            <ComboBoxItem>
+                                Torta
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                Magyarország tortája
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                Forróital
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                Ital
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                Sütemény
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <DatePicker
+                            x:Name="addDatePick"
+                            Width="250"
+                            Localization.Attributes="hu-HU" />
+                    </WrapPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Button
+                            x:Name="confirmAddNew"
+                            Margin="2"
+                            HorizontalAlignment="Left"
+                            Click="addNewItemClick"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            HOZZÁADÁS
+                        </Button>
+                        <Button
+                            Margin="2"
+                            HorizontalAlignment="Right"
+                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                            Foreground="Gray"
+                            IsCancel="True"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            MÉGSEM
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+
         <StackPanel
             x:Name="loadingBar"
             Margin="16"
@@ -39,30 +207,22 @@
                 Style="{DynamicResource MaterialDesignLinearProgressBar}"
                 Value="0" />
         </StackPanel>
-        <Button
-            Width="128"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
-            IsEnabled="True">
-            PASS VIEW
-        </Button>
-        <StackPanel Margin="16">
-            <TextBlock Text="Biztos ki akarja törölni?" />
-            <Button
-                HorizontalAlignment="Center"
-                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
-                CommandParameter="Sample2Cancel"
-                IsCancel="True"
-                Style="{StaticResource MaterialDesignFlatButton}">
-                CANCEL
-            </Button>
-        </StackPanel>
         <ScrollViewer
             x:Name="mainContent"
             VerticalScrollBarVisibility="Hidden"
             Visibility="Collapsed">
             <WrapPanel x:Name="ItemHolder" />
         </ScrollViewer>
+        <Button
+            Margin="15"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="openNewProductDialog"
+            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+            <materialDesign:PackIcon
+                Width="25"
+                Height="25"
+                Kind="Plus" />
+        </Button>
     </Grid>
 </Window>

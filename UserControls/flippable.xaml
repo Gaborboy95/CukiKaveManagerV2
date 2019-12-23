@@ -93,7 +93,10 @@
                         Margin="0,0,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top">
-                        <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                        <ScrollViewer
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            VerticalScrollBarVisibility="Hidden">
                             <WrapPanel HorizontalAlignment="Center">
                                 <TextBox
                                     x:Name="title"
@@ -119,14 +122,32 @@
                                     Width="180"
                                     materialDesign:HintAssist.Hint="Kép elérési út"
                                     materialDesign:HintAssist.IsFloating="True" />
+                                <ComboBox
+                                    x:Name="productType"
+                                    Width="170"
+                                    materialDesign:HintAssist.Hint="Típus"
+                                    materialDesign:HintAssist.IsFloating="True"
+                                    SelectedValuePath="Content">
+                                    <ComboBoxItem>
+                                        Torta
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        Magyarország tortája
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        Forróital
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        Ital
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        Sütemény
+                                    </ComboBoxItem>
+                                </ComboBox>
                                 <DatePicker
                                     x:Name="datePick"
                                     Width="180"
                                     Localization.Attributes="hu-HU" />
-                                <materialDesign:TimePicker
-                                    x:Name="timePick"
-                                    Width="180"
-                                    Is24Hours="True" />
                             </WrapPanel>
                         </ScrollViewer>
                     </Grid>

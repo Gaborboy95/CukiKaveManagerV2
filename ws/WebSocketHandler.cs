@@ -51,7 +51,7 @@ namespace CukiKaveManagerV2.ws
         {
             main.Dispatcher.BeginInvoke(new Action(() =>
             {
-                var _item = new flippable(prd);
+                var _item = new flippable(prd, main);
                 main.ItemHolder.Children.Add(_item);
                 main.Products.Add(prd.id, _item);
             }));
