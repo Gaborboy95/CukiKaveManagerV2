@@ -23,8 +23,8 @@ namespace CukiKaveManagerV2
         private string locale = "hu-HU";
 
         // SERVER URLS
-        //public const string ADDRESS = "cukikave.herokuapp.com"; // This is easier to change
-        public const string ADDRESS = "localhost"; // This is easier to change
+        public const string ADDRESS = "cukikave.herokuapp.com"; // This is easier to change
+        //public const string ADDRESS = "localhost"; // This is easier to change
         // Websocket URL
         const string WS_ADDRESS = "ws://"+ADDRESS; //MAIN SERVER
         
