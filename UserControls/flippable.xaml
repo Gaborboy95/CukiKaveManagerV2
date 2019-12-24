@@ -64,7 +64,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <materialDesign:ColorZone Padding="6" Mode="Accent">
-                        <StackPanel Width="{Binding ElementName=thisFlipper, Path=Width}" Orientation="Horizontal">
+                        <StackPanel Width="190" Orientation="Horizontal">
                             <Button
                                 HorizontalAlignment="Left"
                                 Click="modifyClicked"
@@ -101,19 +101,19 @@
                                 <TextBox
                                     x:Name="title"
                                     Width="180"
-                                    materialDesign:HintAssist.Hint="Elem neve"
+                                    materialDesign:HintAssist.Hint="Termék neve*"
                                     materialDesign:HintAssist.IsFloating="True"
                                     Text="Title" />
                                 <TextBox
                                     x:Name="price"
                                     Width="180"
-                                    materialDesign:HintAssist.Hint="Ár"
+                                    materialDesign:HintAssist.Hint="Ár*"
                                     materialDesign:HintAssist.IsFloating="True"
                                     Text="Price" />
                                 <RichTextBox
                                     x:Name="desc"
                                     Width="180"
-                                    materialDesign:HintAssist.Hint="Leírás"
+                                    materialDesign:HintAssist.Hint="Leírás*"
                                     materialDesign:HintAssist.IsFloating="True">
                                     <FlowDocument />
                                 </RichTextBox>
@@ -125,28 +125,14 @@
                                 <ComboBox
                                     x:Name="productType"
                                     Width="170"
-                                    materialDesign:HintAssist.Hint="Típus"
+                                    materialDesign:HintAssist.Hint="Típus*"
                                     materialDesign:HintAssist.IsFloating="True"
-                                    SelectedValuePath="Content">
-                                    <ComboBoxItem>
-                                        Torta
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        Magyarország tortája
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        Forróital
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        Ital
-                                    </ComboBoxItem>
-                                    <ComboBoxItem>
-                                        Sütemény
-                                    </ComboBoxItem>
-                                </ComboBox>
+                                    SelectedValuePath="Content" />
                                 <DatePicker
                                     x:Name="datePick"
                                     Width="180"
+                                    materialDesign:HintAssist.Hint="Dátum*"
+                                    materialDesign:HintAssist.IsFloating="True"
                                     Localization.Attributes="hu-HU" />
                             </WrapPanel>
                         </ScrollViewer>

@@ -144,23 +144,7 @@
                             x:Name="addProductType"
                             Width="250"
                             materialDesign:HintAssist.Hint="Típus"
-                            materialDesign:HintAssist.IsFloating="True">
-                            <ComboBoxItem>
-                                Torta
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Magyarország tortája
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Forróital
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Ital
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Sütemény
-                            </ComboBoxItem>
-                        </ComboBox>
+                            materialDesign:HintAssist.IsFloating="True" />
                         <DatePicker
                             x:Name="addDatePick"
                             Width="250"

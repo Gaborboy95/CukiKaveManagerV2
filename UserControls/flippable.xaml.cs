@@ -22,8 +22,8 @@ namespace CukiKaveManagerV2.UserControls
         private string locale = "hu-HU";
         private Product orgProduct;
         private MainWindow mainWindow;
-        // List for the combobox so it works properly
         private string[] productTypes = { "Torta", "Magyarország tortái", "Forróital", "Ital", "Sütemény" };
+        // List for the combobox so it works properly
         // This needs to be accessible by the main window
         public int id;
 
@@ -78,16 +78,19 @@ namespace CukiKaveManagerV2.UserControls
             imagePath.Text = _prd.image;
             // Date picker
             datePick.SelectedDate = _prd.added;
+            datePick.DisplayDate = _prd.added;
 
             // ComboBox setup
             _prd.type = parseToComboType(_prd.type);
             productType.Items.Clear();
 
+            
             foreach (string item in productTypes)
                 productType.Items.Add(item);
 
             productType.SelectedItem = _prd.type;
-            
+                    
+
             // Make bitmapimage for the front page
             BitmapImage bmp = new BitmapImage();
             bmp.BeginInit();
@@ -136,7 +139,7 @@ namespace CukiKaveManagerV2.UserControls
         private void modifyClicked(object sender, System.Windows.RoutedEventArgs e)
         {
             // Create a product to compare them
-            Product _prd = new Product(int.Parse(price.Text), title.Text, id, new TextRange(desc.Document.ContentStart, desc.Document.ContentEnd).Text, imagePath.Text, productType.SelectedItem.ToString(), datePick.DisplayDate);
+            Product _prd = new Product(int.Parse(price.Text), title.Text, id, new TextRange(desc.Document.ContentStart, desc.Document.ContentEnd).Text, imagePath.Text, productType.SelectedItem.ToString(), (DateTime)datePick.SelectedDate);
             _prd.description = _prd.description.Remove(_prd.description.Length - 2);
             
             // Don't use the product variable because it doesn't work
@@ -148,6 +151,7 @@ namespace CukiKaveManagerV2.UserControls
             {
                 // Changed, display prompt to check if user really wants to change the data
                 // Debug info
+                /*
                 MessageBox.Show("Mod | Org\n" +
                     $"{_prd.id.ToString()} | {orgProduct.id.ToString()} | {_prd.id == orgProduct.id}\n" +
                     $"{_prd.name} | {orgProduct.name}  | {_prd.name == orgProduct.name}\n" +
@@ -156,10 +160,20 @@ namespace CukiKaveManagerV2.UserControls
                     $"{_prd.price.ToString()} | {orgProduct.price.ToString()} | {_prd.price == orgProduct.price}\n" +
                     $"{_prd.type} | {orgProduct.type} | {_prd.type == orgProduct.type}\n" +
                     $"{_prd.added.ToString()} | {orgProduct.added.ToString()} | {_prd.added == orgProduct.added}");
-                    
+                
+                */
+                
+                int _price;
+                if (title.Text == "" || new TextRange(desc.Document.ContentStart, desc.Document.ContentEnd).Text == "" || !int.TryParse(price.Text, out _price) || productType.SelectedItem == null)
+                {
+                    mainWindow.inputMissing.IsOpen = true;
+                }
+                else
+                {
+                    mainWindow.updateConfirm.IsOpen = true;
+                    mainWindow.currentPrompt = id;
+                }
 
-                mainWindow.updateConfirm.IsOpen = true;
-                mainWindow.currentPrompt = id;
             }
         }
         

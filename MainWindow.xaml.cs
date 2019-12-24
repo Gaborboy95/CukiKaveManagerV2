@@ -19,21 +19,31 @@ namespace CukiKaveManagerV2
     /// </summary>
     public partial class MainWindow : Window
     {
+        // Localization
         private string locale = "hu-HU";
+
+        // SERVER URLS
         //public const string ADDRESS = "cukikave.herokuapp.com"; // This is easier to change
         public const string ADDRESS = "localhost"; // This is easier to change
+        // Websocket URL
         const string WS_ADDRESS = "ws://"+ADDRESS; //MAIN SERVER
+        
+        // Product types
+        public string[] productTypes = { "Torta", "Magyarország tortái", "Forróital", "Ital", "Sütemény" };
+        // Login file
         const string HASH_FILE = "auth.hash";
+        // Product list for easier management
         public Dictionary<int, flippable> Products = new Dictionary<int, flippable>();
+        // This is for the dialogs
         public int currentPrompt = -1;
-
+        // Websocket declaration
         public GenericWebSocket ws;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            
+            // Set localization
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(locale);
             Thread.CurrentThread.CurrentCulture = new CultureInfo(locale);
 
@@ -47,9 +57,14 @@ namespace CukiKaveManagerV2
 
             foreach (var _product in products)
             {
+                // Create flippable
                 var flp = new flippable(_product, this);
+
+                // Add to containers
                 ItemHolder.Children.Add(flp);
                 Products.Add(_product.id, flp);
+
+                // Add button click handlers
                 deleteButton.Click += (object sndr, RoutedEventArgs arg) => flp.deleteConfirm(currentPrompt);
                 updateConfirmButton.Click += (object sndr, RoutedEventArgs arg) => flp.updateConfirm(currentPrompt);
                 updateRollbackButton.Click += (object sndr, RoutedEventArgs arg) => flp.rollbackChanges(currentPrompt);
@@ -71,18 +86,16 @@ namespace CukiKaveManagerV2
 
             cukiAPI.hash = hash;
 
+            // Combobox thing
+            addProductType.Items.Clear();
+            foreach (string option in productTypes)
+                addProductType.Items.Add(option);
+
             ws = new GenericWebSocket(new Uri(WS_ADDRESS + "/" + hash));
             ws.OnWebSocketConnected += onWSConnected;
             await ws.Connect();
             new WebSocketHandler(ws, this);
 
-            //Add handler for clicking on the add new product button
-            confirmAddNew.Click += ConfirmAddNew_Click;
-        }
-
-        private void ConfirmAddNew_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
 
         private async void onWSConnected(object sender, EventArgs e)
