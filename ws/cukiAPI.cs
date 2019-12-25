@@ -27,7 +27,6 @@ namespace CukiKaveManagerV2.ws
         public async static Task<List<Product>> GetProducts()
         {
             var result = await client.GetAsync(server + URL_GETPRODUCTS);
-            MessageBox.Show("Result of GetProducts : " + result.StatusCode.ToString());
             if (result.IsSuccessStatusCode)
             {
                 string readString = await result.Content.ReadAsStringAsync();
