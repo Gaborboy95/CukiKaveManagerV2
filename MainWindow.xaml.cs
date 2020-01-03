@@ -120,29 +120,10 @@ namespace CukiKaveManagerV2
             else
             {
                 //Success, add the new item to the database
-                Product newPrd = new Product(int.Parse(addPrice.Text), addTitle.Text, 999, new TextRange(addDesc.Document.ContentStart, addDesc.Document.ContentEnd).Text, addImagePath.Text, parseType(((ComboBoxItem)addProductType.SelectedItem).Content.ToString()), addDatePick.DisplayDate);
+                Product newPrd = new Product(int.Parse(addPrice.Text), addTitle.Text, 999, new TextRange(addDesc.Document.ContentStart, addDesc.Document.ContentEnd).Text, addImagePath.Text, addProductType.SelectedItem.ToString(), addDatePick.DisplayDate);
 
                 await cukiAPI.SendNewProduct(newPrd);
 
-            }
-        }
-
-        public string parseType(string _ps)
-        {
-            switch (_ps)
-            {
-                case "Torta":
-                    return "cake";
-                case "Magyarország tortái":
-                    return "huncake";
-                case "Forróital":
-                    return "hotdrinks";
-                case "Ital":
-                    return "drinks";
-                case "Sütemény":
-                    return "bakedgoods";
-                default:
-                    return "parseerror";
             }
         }
     }

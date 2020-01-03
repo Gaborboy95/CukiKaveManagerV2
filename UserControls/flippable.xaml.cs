@@ -45,25 +45,6 @@ namespace CukiKaveManagerV2.UserControls
 
         public void updateContents(Product _prd) => setContents(_prd);
 
-        private string parseToComboType(string _inType)
-        {
-            switch (_inType)
-            {
-                case "cake":
-                    return "Torta";
-                case "huncake":
-                    return "Magyarország tortái";
-                case "hotdrinks":
-                    return "Forróital";
-                case "drinks":
-                    return "Ital";
-                case "bakedgoods":
-                    return "Sütemény";
-                default:
-                    return "parseerror";
-            }
-        }
-
         public void setContents(Product _prd)
         {
             // Titles
@@ -81,10 +62,8 @@ namespace CukiKaveManagerV2.UserControls
             datePick.DisplayDate = _prd.added;
 
             // ComboBox setup
-            _prd.type = parseToComboType(_prd.type);
             productType.Items.Clear();
 
-            
             foreach (string item in productTypes)
                 productType.Items.Add(item);
 
@@ -94,7 +73,7 @@ namespace CukiKaveManagerV2.UserControls
             // Make bitmapimage for the front page
             BitmapImage bmp = new BitmapImage();
             bmp.BeginInit();
-            bmp.UriSource = new Uri(cukiAPI.server + "/uploads/" + _prd.image, UriKind.Absolute);
+            bmp.UriSource = new Uri(cukiAPI.server + "/uploads/imgs/" + _prd.image, UriKind.Absolute);
             bmp.EndInit();
             frontImg.Source = bmp;
 
@@ -107,8 +86,6 @@ namespace CukiKaveManagerV2.UserControls
             // Make sure that the currentPrompt is the current flippable
             if(currentPrompt == id)
             {
-                // Do some funky business
-                orgProduct.type = mainWindow.parseType(orgProduct.type);
                 // Set the content
                 setContents(orgProduct);
             }
@@ -185,14 +162,13 @@ namespace CukiKaveManagerV2.UserControls
                 // Create a product from the current context
                 Product _prd = new Product(int.Parse(price.Text), title.Text, id, new TextRange(desc.Document.ContentStart, desc.Document.ContentEnd).Text, imagePath.Text, productType.SelectedItem.ToString(), datePick.DisplayDate);
                 _prd.description = _prd.description.Remove(_prd.description.Length - 2);
-                _prd.type = mainWindow.parseType(_prd.type);
 
                 // Hide the Dialog and send a message to the ws server
                 mainWindow.currentPrompt = -1;
                 mainWindow.updateConfirm.IsOpen = false;
                 if(await cukiAPI.UpdateProduct(_prd))
                 {
-                    
+                    thisFlipper.IsFlipped = false;
                 }
             }
         }
